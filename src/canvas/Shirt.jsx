@@ -17,7 +17,6 @@ const MyOBJComponent = () => {
   const decalRef = useRef();
   const objRef = useRef();
   const texture = useLoader(TextureLoader, '/threejs.png');
-  const obj = useLoader(OBJLoader, '/cloth1.obj');
 
   if (!obj) return <div>Error loading OBJ model</div>;
 
@@ -74,8 +73,14 @@ const MyOBJComponent = () => {
 
 const Shirt = () => {
   const snap = useSnapshot(state);
-  const { nodes, materials } = useGLTF('/couples.glb')
-
+  const { nodes, materials, scene } = useGLTF('/couples.glb')
+  scene.traverse((node) => {
+    if (node.isMesh) {
+      console.log('shado')
+      node.castShadow = true; // Enable shadow casting
+      node.receiveShadow = true; // Enable shadow receiving
+    }
+  });
   const logoTexture = useTexture(snap.frontLogoDecal);
   const fullTexture = useTexture(snap.fullDecal);
   const backLogoTexture = useTexture(snap.backLogoDecal);
@@ -106,7 +111,7 @@ const Shirt = () => {
           material={materials.initialShadingGroup}
           position={[3.059, 0, 0.125]}
           rotation={[Math.PI / 2, 0, 0]}
-          scale={0.01}
+               
           // material-roughness={0}
           material-metalness={0.1}
           dispose={null}
