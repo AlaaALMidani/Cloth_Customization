@@ -2,9 +2,10 @@ import { Canvas } from '@react-three/fiber'
 import { Center } from '@react-three/drei';
 import Shirt from './Shirt';
 import CameraRig from './CameraRig';
-import FemaleShirt from './FemaleShirt';
+// import FemaleShirt from './FemaleShirt';
 
-const CanvasModel = () => {
+const CanvasModel = ({ show }) => {
+  if (!show) return null; 
   return (
     <Canvas
       camera={{ position: [0, 0, 0], fov: 25 }}
