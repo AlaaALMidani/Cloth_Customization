@@ -9,7 +9,7 @@ import { useThree } from "@react-three/fiber";
 import { Decal, useGLTF } from "@react-three/drei";
 import { useState, useEffect } from 'react';
 const DecalExample = () => {
-  const { nodes } = useGLTF("/shirt.glb"); 
+  const { nodes } = useGLTF("/shirt.glb");
 
   const [decalProperties, setDecalProperties] = useState({
     position: null,
@@ -22,8 +22,8 @@ const DecalExample = () => {
 
   const handlePointerMove = (event) => {
     raycaster.setFromCamera(mouse, event.camera);
-    const intersects = raycaster.intersectObject(nodes.T_Shirt_male); 
-
+    const intersects = raycaster.intersectObject(nodes.T_Shirt_male);
+    console.log()
     if (intersects.length > 0) {
       const intersect = intersects[0];
       setDecalProperties((prev) => ({
@@ -36,7 +36,7 @@ const DecalExample = () => {
 
   return (
     <>
-     
+
       <mesh
         geometry={nodes.T_Shirt_male.geometry}
         onPointerMove={handlePointerMove}
@@ -44,7 +44,7 @@ const DecalExample = () => {
         <meshStandardMaterial color="lightgrey" />
         {decalProperties.position && (
           <Decal
-          debug
+            debug
             position={decalProperties.position}
             normal={decalProperties.normal}
             scale={decalProperties.scale}
@@ -52,7 +52,7 @@ const DecalExample = () => {
           >
             <meshStandardMaterial
               map={new THREE.TextureLoader().load("/person.jpg")}
-              transparent
+            // transparent
             />
           </Decal>
         )}
@@ -78,9 +78,9 @@ const CanvasModel = () => {
 
       <CameraRig>
         <Center>
-          {/* <Shirt />
-          <TexturedPlane /> */}
-          <DecalExample />
+          <Shirt />
+          {/* <TexturedPlane /> */}
+          {/* <DecalExample /> */}
         </Center>
       </CameraRig>
     </Canvas>

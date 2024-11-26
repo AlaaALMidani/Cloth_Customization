@@ -11,81 +11,67 @@ import { useRef, useState } from 'react';
 import { TextureLoader } from 'three';
 import { MeshStandardMaterial } from 'three';
 
-const MyOBJComponent = () => {
-  const [decalPosition, setDecalPosition] = useState([0, 0, 0]);
-  const [isDragging, setIsDragging] = useState(false);
-  const decalRef = useRef();
-  const objRef = useRef();
-  const texture = useLoader(TextureLoader, '/threejs.png');
-
-  if (!obj) return <div>Error loading OBJ model</div>;
-
-  // Assign a material to the OBJ mesh (crucial for OBJ files)
-  obj.traverse((child) => {
-    if (child.isMesh) {
-      child.material = new MeshStandardMaterial({ color: 'blue' }); //Example Material
-    }
-  });
-
-
-  const handlePointerDown = (e) => {
-    setIsDragging(true);
-  };
-
-  const handlePointerUp = () => {
-    setIsDragging(false);
-  };
-
-  const handlePointerMove = (e) => {
-    if (!isDragging) return;
-    const mouse = new THREE.Vector2((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, camera);
-
-    const intersects = raycaster.intersectObject(objRef.current, true); // Raycast against the OBJ
-
-    if (intersects.length > 0) {
-      const intersectPoint = intersects[0].point;
-      setDecalPosition([intersectPoint.x, intersectPoint.y, intersectPoint.z]);
-    }
-  };
-
-  return (
-    <>
-      <group >
-        <mesh ref={objRef}> {/* Wrap OBJ and Decal in a mesh */}
-          <primitive object={obj} />
-          <Decal
-            ref={decalRef}
-            position={decalPosition}
-            rotation={[0, 0, 0]}
-            scale={[0.5, 0.5, 0.5]}
-            map={texture}
-            onPointerDown={handlePointerDown}
-            onPointerUp={handlePointerUp}
-            onPointerMove={handlePointerMove}
-          />
-        </mesh>
-      </group>
-    </>
-  );
-};
 
 const Shirt = () => {
   const snap = useSnapshot(state);
-  const { nodes, materials, scene } = useGLTF('/couples.glb')
-  scene.traverse((node) => {
-    if (node.isMesh) {
-      console.log('shado')
-      node.castShadow = true; // Enable shadow casting
-      node.receiveShadow = true; // Enable shadow receiving
-    }
+  const { nodes, materials } = useGLTF('/shirt.glb')
+
+
+
+  
+  const [decalProperties, setDecalProperties] = useState({
+    position: null,
+    normal: new THREE.Vector3(0, 1, 0),
+    scale: [0.5, 0.5, 0.5],
+    rotation: [0, 0, 0],
   });
+  const [textProperties, setTextProperties] = useState({
+    position: null,
+    normal: new THREE.Vector3(0, 1, 0),
+    scale: [0.5, 0.5, 0.5],
+    rotation: [0, 0, 0],
+  });
+
+
+  const initialMovable = {
+    logo: false,
+    text: false,
+    full: false
+  }
+  const [movable, setMovable] = useState({
+    logo: true,
+    text: false,
+    full: false
+  });
+  const { raycaster, mouse } = useThree();
   const logoTexture = useTexture(snap.frontLogoDecal);
   const fullTexture = useTexture(snap.fullDecal);
   const backLogoTexture = useTexture(snap.backLogoDecal);
 
-  useFrame((state, delta) => easing.dampC(materials.initialShadingGroup.color, snap.color, 0.25, delta));
+  const handlePointerMove = (event) => {
+    raycaster.setFromCamera(mouse, event.camera);
+
+    for (const key in movable) {
+      if (movable[key]) {
+        const intersects = raycaster.intersectObject(nodes.T_Shirt_male);
+        console.log('e')
+        if (intersects.length > 0) {
+          const intersect = intersects[0];
+          setDecalProperties((prev) => ({
+            ...prev,
+            position: intersect.point,
+            normal: intersect.face.normal,
+          }));
+        }
+      }
+    }
+
+  };
+  const handleDoubleClick = () => {
+    setMovable({ ...initialMovable })
+  }
+
+  useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
 
   const stateString = JSON.stringify(snap);
 
@@ -107,17 +93,19 @@ const Shirt = () => {
       <OrbitControls />
       <group key={stateString}>
         <mesh
-          geometry={nodes.cloth1.geometry}
-          material={materials.initialShadingGroup}
+          geometry={nodes.T_Shirt_male.geometry}
+          material={materials.lambert1}
           position={[3.059, 0, 0.125]}
-          rotation={[Math.PI / 2, 0, 0]}
-               
-          // material-roughness={0}
-          material-metalness={0.1}
+          rotation={[0, 0, 0]}
+
+          onPointerMove={handlePointerMove}
+          onDoubleClick={handleDoubleClick}
+          material-roughness={0.5}
+          material-metalness={0.5}
           dispose={null}
         >
 
-          {snap.isFullTexture && (
+          {/* {snap.isFullTexture && (
             <Decal
               debug
               position={[0, 0, 0]}
@@ -127,49 +115,38 @@ const Shirt = () => {
               depthTest={false}
               depthWrite={true}
             />
-          )}
+          )} */}
 
           {snap.isFrontLogoTexture && (
             <Decal
               debug
-              position={snap.frontLogoPosition}
-              rotation={[0, 0, 0]}
+              position={decalProperties.position}
+              normal={decalProperties.normal}
               scale={snap.frontLogoScale}
-              map={logoTexture}
+              rotation={decalProperties.rotation}
               map-anisotropy={16}
               depthTest={false}
               depthWrite={true}
-            />
+            >
+              <meshStandardMaterial
+                map={logoTexture}
+                transparent
+              />
+            </Decal>
           )}
+        
+
           {snap.isFrontText && (
             <Decal
               debug
-              position={snap.frontTextPosition}
-              rotation={snap.frontTextRotation}
+              position={textProperties.position}
+              normal={textProperties.normal}
               scale={snap.frontTextScale}
               map={createTextTexture(snap.frontText, snap.frontTextFont, snap.frontTextSize, snap.frontTextColor)}
             />
           )}
 
-          {snap.isBackLogoTexture && (
-            <Decal
-              position={snap.backLogoPosition}
-              rotation={snap.backLogoRotation}
-              scale={snap.backLogoScale}
-              map={backLogoTexture}
-              map-anisotropy={16}
-              depthTest={false}
-              depthWrite={true}
-            />
-          )}
-          {snap.isBackText && (
-            <Decal
-              position={snap.backTextPosition}
-              rotation={snap.backTextRotation}
-              scale={snap.backTextScale}
-              map={createTextTexture(snap.backText, snap.backTextFont, snap.backTextSize, snap.backTextColor)}
-            />
-          )}
+
         </mesh>
       </group>
     </>
