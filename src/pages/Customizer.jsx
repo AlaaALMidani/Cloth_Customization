@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
-
+import CanvasModel from '../canvas/CanvasModel';
 import LogoControls from '../canvas/LogoControls';
 import TextControls from '../canvas/TextControls';
 import state from '../store';
@@ -126,6 +126,7 @@ const Customizer = () => {
     <AnimatePresence>
       {!snap.intro && (
         <>
+         <CanvasModel show={true} />
           <motion.div
             key="custom"
             className="absolute top-0 left-0 z-10"
