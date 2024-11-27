@@ -133,7 +133,7 @@ const Shirt = () => {
 
           {snap.isFullTexture && (
             <Decal
-              debug
+              // debug
               position={fullProperties.position}
               rotation={[0, 0, 0]}
               scale={1}
@@ -145,7 +145,7 @@ const Shirt = () => {
 
           {snap.isFrontLogoTexture && (
             <Decal
-              debug
+              // debug
               position={decalProperties.position}
               normal={decalProperties.normal}
               scale={snap.frontLogoScale}
@@ -164,7 +164,7 @@ const Shirt = () => {
 
           {snap.isFrontText && (
             <Decal
-              debug
+              // debug
               position={textProperties.position}
               normal={textProperties.normal}
               scale={snap.frontTextScale}
