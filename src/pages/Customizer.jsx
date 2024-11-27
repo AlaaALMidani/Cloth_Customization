@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 
+import CanvasModel from '../canvas/CanvasModel';
 import LogoControls from '../canvas/LogoControls';
 import TextControls from '../canvas/TextControls';
 import state from '../store';
@@ -10,6 +11,7 @@ import { EditorTabs, FilterTabs, DecalTypes, texturesLogos } from '../config/con
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { ColorPicker, CustomButton, FilePicker, TextureLogoPicker, Tab } from '../components';
 import Movable from '../components/Movable';
+
 const Customizer = () => {
   const snap = useSnapshot(state);
 
@@ -72,6 +74,7 @@ const Customizer = () => {
     }
   };
 
+  
 
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];

@@ -7,17 +7,17 @@ const CameraRig = ({ children }) => {
   useEffect(() => {
     const isBreakpoint = window.innerWidth <= 1260;
     const isMobile = window.innerWidth <= 600;
-
+    let targetPosition = [-0.4, 0, 2];
     // set the initial position of the model
-    // let targetPosition = [-0.4, 0, 2];
+
     //pant
     // let targetPosition = [-0.4, 0, -600];
     //GirlsShirt
     // let targetPosition = [-0.4, 0, -600];
-//Dreess
+    //Dreess
     // let targetPosition = [-0.8, 750, -500];
     //girl_Long_dress
-    let targetPosition = [-100, 200, 300];
+    // let targetPosition = [-100, 200, 300];
     if (isBreakpoint) targetPosition = [0, 0, 2];
     if (isMobile) targetPosition = [0, 0.2, 2.5];
 

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { FaChevronDown, FaBars, FaTimes } from 'react-icons/fa'; // Importing icons
 import state from '../store'; // Assuming this is where your state resides
