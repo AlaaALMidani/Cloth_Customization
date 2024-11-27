@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Center } from '@react-three/drei';
 import Shirt from './Shirt';
 import CameraRig from './CameraRig';
-
+import {Female as SportyBra } from './Female';
 import Pant from './pant';
 import Dreess from './Dreess';
 import Girls_long_Dreses from './Girls_long_Dreses';
@@ -30,6 +30,7 @@ const CanvasModel = ({ show }) => {
           {/* <GirlsShirt/> */}
          {/* <Dreess/> */}
          <Girls_long_Dreses />
+         {/*  <SportyBra scale={2.5} position={[0, -3,0]} /> */} {/* red tshirt */}
         </Center>
       </CameraRig>
     </Canvas>
