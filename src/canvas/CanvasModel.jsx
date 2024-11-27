@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Center } from '@react-three/drei';
 import Shirt from './Shirt';
 import CameraRig from './CameraRig';
-<<<<<<< HEAD
+
 import Pant from './pant';
 import Dreess from './Dreess';
 import Girls_long_Dreses from './Girls_long_Dreses';
@@ -11,10 +11,8 @@ import Girls_long_Dreses from './Girls_long_Dreses';
 
 // import FemaleShirt from './FemaleShirt';
 
-=======
 // import FemaleShirt from './FemaleShirt';
 
->>>>>>> 7d6fc9dd3f0b5249c55c661c0478c6ac403590d5
 const CanvasModel = ({ show }) => {
   if (!show) return null; 
   return (
