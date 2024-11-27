@@ -26,7 +26,6 @@ const Home = () => {
           }}
           {...slideAnimation('left')}
         >
-<<<<<<< HEAD
 
       <Navbar/>
           {/* Overlay for dimming the background image */}
@@ -118,15 +117,10 @@ const Home = () => {
 
 
 
->>>>>>> 7d6fc9dd3f0b5249c55c661c0478c6ac403590d5
         </motion.div>
       )}
     </AnimatePresence>
   );
-<<<<<<< HEAD
 };
 
-=======
-}
->>>>>>> 7d6fc9dd3f0b5249c55c661c0478c6ac403590d5
 export default Home;
