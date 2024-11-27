@@ -83,5 +83,5 @@ input[type="file"] {
   display: none !important;
 }
 body {
-  @apply bg-sky-950;
+  @apply bg-slate-500;
 }
