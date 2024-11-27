@@ -79,8 +79,7 @@ const CanvasModel = () => {
       <CameraRig>
         <Center>
           <Shirt />
-          {/* <TexturedPlane /> */}
-          {/* <DecalExample /> */}
+          
         </Center>
       </CameraRig>
     </Canvas>

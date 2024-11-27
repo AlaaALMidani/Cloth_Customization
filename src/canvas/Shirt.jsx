@@ -16,15 +16,13 @@ const Shirt = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF('/shirt.glb')
 
-
-
-  
   const [decalProperties, setDecalProperties] = useState({
     position: null,
     normal: new THREE.Vector3(0, 1, 0),
     scale: [0.5, 0.5, 0.5],
     rotation: [0, 0, 0],
   });
+
   const [textProperties, setTextProperties] = useState({
     position: null,
     normal: new THREE.Vector3(0, 1, 0),
@@ -39,8 +37,8 @@ const Shirt = () => {
     full: false
   }
   const [movable, setMovable] = useState({
-    logo: true,
-    text: false,
+    logo: false,
+    text: true,
     full: false
   });
   const { raycaster, mouse } = useThree();
@@ -54,15 +52,24 @@ const Shirt = () => {
     for (const key in movable) {
       if (movable[key]) {
         const intersects = raycaster.intersectObject(nodes.T_Shirt_male);
-        console.log('e')
+
         if (intersects.length > 0) {
           const intersect = intersects[0];
-          setDecalProperties((prev) => ({
-            ...prev,
-            position: intersect.point,
-            normal: intersect.face.normal,
-          }));
+          if (key === 'text') {
+            setTextProperties((prev) => ({
+              ...prev,
+              position: intersect.point,
+              normal: intersect.face.normal,
+            }));
+          } else if (key === 'logo') {
+            setLogoProperties((prev) => ({
+              ...prev,
+              position: intersect.point,
+              normal: intersect.face.normal,
+            }));
+          }
         }
+
       }
     }
 
@@ -100,12 +107,13 @@ const Shirt = () => {
 
           onPointerMove={handlePointerMove}
           onDoubleClick={handleDoubleClick}
+
           material-roughness={0.5}
           material-metalness={0.5}
           dispose={null}
         >
 
-          {/* {snap.isFullTexture && (
+          {snap.isFullTexture && (
             <Decal
               debug
               position={[0, 0, 0]}
@@ -115,7 +123,7 @@ const Shirt = () => {
               depthTest={false}
               depthWrite={true}
             />
-          )} */}
+          )}
 
           {snap.isFrontLogoTexture && (
             <Decal
@@ -134,7 +142,7 @@ const Shirt = () => {
               />
             </Decal>
           )}
-        
+
 
           {snap.isFrontText && (
             <Decal
@@ -142,9 +150,11 @@ const Shirt = () => {
               position={textProperties.position}
               normal={textProperties.normal}
               scale={snap.frontTextScale}
+              rotation={snap.frontTextRotation}
               map={createTextTexture(snap.frontText, snap.frontTextFont, snap.frontTextSize, snap.frontTextColor)}
             />
           )}
+
 
 
         </mesh>
