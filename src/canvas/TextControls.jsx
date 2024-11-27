@@ -191,13 +191,13 @@ const TextControls = () => {
         <span className="text-gray-700">FRX:</span>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleRotationChange('front', 0, snap.frontTextRotation[0] - 0.01)}
+          onClick={() => handleRotationChange('front', 0, snap.frontTextRotation[0] -0.1)}
         >
           -
         </button>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleRotationChange('front', 0, snap.frontTextRotation[0] + 0.01)}
+          onClick={() => handleRotationChange('front', 0, snap.frontTextRotation[0] +0.1)}
         >
           +
         </button>
@@ -206,13 +206,13 @@ const TextControls = () => {
         <span className="text-gray-700">FRY:</span>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleRotationChange('front', 1, snap.frontTextRotation[1] - 0.01)}
+          onClick={() => handleRotationChange('front', 1, snap.frontTextRotation[1] -0.1)}
         >
           -
         </button>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleRotationChange('front', 1, snap.frontTextRotation[1] + 0.01)}
+          onClick={() => handleRotationChange('front', 1, snap.frontTextRotation[1] +0.1)}
         >
           +
         </button>
@@ -221,13 +221,13 @@ const TextControls = () => {
         <span className="text-gray-700">FRZ:</span>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleRotationChange('front', 2, snap.frontTextRotation[2] - 0.01)}
+          onClick={() => handleRotationChange('front', 2, snap.frontTextRotation[2] -0.1)}
         >
           -
         </button>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleRotationChange('front', 2, snap.frontTextRotation[2] + 0.01)}
+          onClick={() => handleRotationChange('front', 2, snap.frontTextRotation[2] +0.1)}
         >
           +
         </button>
@@ -236,7 +236,7 @@ const TextControls = () => {
         <span className="text-gray-700">FSX:</span>
         <button
           className="border border-gray-300 rounded-md p-2"
-          onClick={() => handleScaleChange('front', 0, snap.frontTextScale[0] - 0.01)}
+          onClick={() => handleScaleChange('front', 0, snap.frontTextScale[0] -0.01)}
         >
           -
         </button>
