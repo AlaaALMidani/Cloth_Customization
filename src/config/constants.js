@@ -1,4 +1,7 @@
-import { swatch, fileIcon, logoShirt, stylishShirt, logoControls, textIcon, download, textureLogoPicker, texture1, texture2, texture3, texture4, texture5, logo1, logo2 } from "../assets";
+import { swatch, fileIcon, logoShirt, stylishShirt, logoControls, textIcon  ,download, textureLogoPicker, texture1, texture2, texture3, texture4, texture5, logo1, logo2 } from "../assets";
+import logoMovement from "../assets/logoMovement.png"
+import textMovement from "../assets/textMovement.png"
+import fullMovement from "../assets/fullMovement.png"
 
 export const EditorTabs = [
   {
@@ -20,6 +23,18 @@ export const EditorTabs = [
   {
     name: "texturelogopicker",
     icon: textureLogoPicker,
+  },
+  {
+    name: "logoMovement",
+    icon: logoMovement,
+  },
+  {
+    name: "textMovement",
+    icon: textMovement,
+  },
+  {
+    name: "fullMovement",
+    icon: fullMovement,
   },
 ];
 

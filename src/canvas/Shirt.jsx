@@ -16,6 +16,8 @@ const Shirt = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF('/shirt.glb')
 
+
+
   const [decalProperties, setDecalProperties] = useState({
     position: null,
     normal: new THREE.Vector3(0, 1, 0),
@@ -30,6 +32,13 @@ const Shirt = () => {
     rotation: [0, 0, 0],
   });
 
+  const [fullProperties, setFullProperties] = useState({
+    position: null,
+    normal: new THREE.Vector3(0, 1, 0),
+    scale: [0.5, 0.5, 0.5],
+    rotation: [0, 0, 0],
+  });
+
 
   const initialMovable = {
     logo: false,
@@ -37,8 +46,8 @@ const Shirt = () => {
     full: false
   }
   const [movable, setMovable] = useState({
-    logo: false,
-    text: true,
+    logo: true,
+    text: false,
     full: false
   });
   const { raycaster, mouse } = useThree();
@@ -62,7 +71,14 @@ const Shirt = () => {
               normal: intersect.face.normal,
             }));
           } else if (key === 'logo') {
-            setLogoProperties((prev) => ({
+            setDecalProperties((prev) => ({
+              ...prev,
+              position: intersect.point,
+              normal: intersect.face.normal,
+            }));
+          }
+          else if (key === 'full') {
+            setFullProperties((prev) => ({
               ...prev,
               position: intersect.point,
               normal: intersect.face.normal,
@@ -97,8 +113,10 @@ const Shirt = () => {
 
   return (
     <>
+    
       <OrbitControls />
       <group key={stateString}>
+        
         <mesh
           geometry={nodes.T_Shirt_male.geometry}
           material={materials.lambert1}
@@ -116,7 +134,7 @@ const Shirt = () => {
           {snap.isFullTexture && (
             <Decal
               debug
-              position={[0, 0, 0]}
+              position={fullProperties.position}
               rotation={[0, 0, 0]}
               scale={1}
               map={fullTexture}
@@ -134,7 +152,7 @@ const Shirt = () => {
               rotation={decalProperties.rotation}
               map-anisotropy={16}
               depthTest={false}
-              depthWrite={true}
+              depthWrite={false}
             >
               <meshStandardMaterial
                 map={logoTexture}

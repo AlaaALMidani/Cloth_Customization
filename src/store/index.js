@@ -3,6 +3,11 @@ import { proxy } from 'valtio';
 const state = proxy({
   intro: true,
   color: '#EFBD48',
+  movable: {
+    logo: false,
+    text: false,
+    full: false
+  },
   isFrontLogoTexture: true,
   isBackLogoTexture: true,
   isFrontText: true,
@@ -10,7 +15,7 @@ const state = proxy({
   isFullTexture: false,
   frontLogoDecal: './threejs.png',
   fullDecal: './texture.jpeg',
-  frontLogoPosition: [ 0, 0.04, 0.15 ],
+  frontLogoPosition: [0, 0.04, 0.15],
   frontLogoScale: 0.1,
   backLogoDecal: './threejs.png',
   backLogoPosition: [0, 0.04, -0.15],
