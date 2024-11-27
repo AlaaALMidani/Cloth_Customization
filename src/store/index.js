@@ -6,7 +6,7 @@ const state = proxy({
   movable: {
     logo: false,
     text: false,
-    full: false
+    full: false,
   },
   isFrontLogoTexture: true,
   isBackLogoTexture: true,

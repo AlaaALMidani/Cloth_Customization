@@ -9,7 +9,7 @@ import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes, texturesLogos } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { ColorPicker, CustomButton, FilePicker, TextureLogoPicker, Tab } from '../components';
-
+import Movable from '../components/Movable';
 const Customizer = () => {
   const snap = useSnapshot(state);
 
@@ -46,6 +46,13 @@ const Customizer = () => {
             handleTextureLogoClick={handleTextureLogoClick}
           />
         );
+      case "fullMovement":
+        return <Movable type={'full'} />
+      case "textMovement":
+        return <Movable type={'text'} />
+      case "logoMovement":
+        return <Movable type={'logo'} />
+
       default:
         return null;
     }
@@ -64,14 +71,14 @@ const Customizer = () => {
       state.backLogoDecal = textureLogo.image
     }
   };
-  
+
 
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
 
     state[decalType.stateProperty] = result;
 
-    if(!activeFilterTab[decalType.filterTab]) {
+    if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab)
     }
   }
@@ -79,22 +86,22 @@ const Customizer = () => {
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "frontLogoShirt":
-          state.isFrontLogoTexture = !activeFilterTab[tabName];
+        state.isFrontLogoTexture = !activeFilterTab[tabName];
         break;
       case "backLogoShirt":
-          state.isBackLogoTexture = !activeFilterTab[tabName];
+        state.isBackLogoTexture = !activeFilterTab[tabName];
         break;
       case "frontTextShirt":
-          state.isFrontText = !activeFilterTab[tabName];
+        state.isFrontText = !activeFilterTab[tabName];
         break;
       case "backTextShirt":
-          state.isBackText = !activeFilterTab[tabName];
+        state.isBackText = !activeFilterTab[tabName];
         break;
       case "stylishShirt":
-          state.isFullTexture = !activeFilterTab[tabName];
+        state.isFullTexture = !activeFilterTab[tabName];
         break;
-        case "downloadShirt":
-          downloadCanvasToImage();
+      case "downloadShirt":
+        downloadCanvasToImage();
         break;
       default:
         state.isFrontLogoTexture = true;
@@ -134,7 +141,7 @@ const Customizer = () => {
             <div className="flex items-center min-h-screen">
               <div className="editortabs-container tabs">
                 {EditorTabs.map((tab) => (
-                  <Tab 
+                  <Tab
                     key={tab.name}
                     tab={tab}
                     handleClick={() => setActiveEditorTab(tab.name)}
@@ -150,7 +157,7 @@ const Customizer = () => {
             className="absolute z-10 top-5 right-5"
             {...fadeAnimation}
           >
-            <CustomButton 
+            <CustomButton
               type="filled"
               title="Go Back"
               handleClick={() => state.intro = true}

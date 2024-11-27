@@ -3,7 +3,8 @@ import React from 'react';
 const TextureLogoPicker = ({ texturesLogos, handleTextureLogoClick }) => {
   const textures = texturesLogos.filter((textureLogo) => textureLogo.type === 'texture');
   const frontLogos = texturesLogos.filter((textureLogo) => textureLogo.type === 'frontLogo');
-  const backLogos = texturesLogos.filter((textureLogo) => textureLogo.type === 'backLogo');
+  const backLogos = texturesLogos.filter(
+    (textureLogo) => textureLogo.type === 'backLogo');
 
   const renderImages = (images) => {
     return (

@@ -58,8 +58,8 @@ const Shirt = () => {
   const handlePointerMove = (event) => {
     raycaster.setFromCamera(mouse, event.camera);
 
-    for (const key in movable) {
-      if (movable[key]) {
+    for (const key in snap.movable) {
+      if (snap.movable[key]) {
         const intersects = raycaster.intersectObject(nodes.T_Shirt_male);
 
         if (intersects.length > 0) {
@@ -91,7 +91,7 @@ const Shirt = () => {
 
   };
   const handleDoubleClick = () => {
-    setMovable({ ...initialMovable })
+    state.movable={ ...initialMovable }
   }
 
   useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
